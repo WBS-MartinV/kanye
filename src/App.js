@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // our source of data
 const API = "https://api.kanye.rest/";
@@ -15,8 +15,10 @@ const Solution = () => {
             .then((json) => json.quote) // optionally, we can narrow of result here to just the quote
             .then((quote) => setQuote(quote)); // and log it to the console
 
-    // but this will cause an infinite update loop :(
-    getData();
+    // so instead we need to use the useEffect hook
+    useEffect(() => {
+        getData(); // this will only happen once when our component gets mounted (added to the page)
+    }, [/*No dependecies!*/]); // or when state in our dependency list changes - here we dont have any
 
     return <h1>{quote}</h1>;
 };
